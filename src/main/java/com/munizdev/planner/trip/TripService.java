@@ -3,6 +3,7 @@ package com.munizdev.planner.trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -16,5 +17,9 @@ public class TripService {
         this.repository.save(trip);
 
         return trip;
+    }
+
+    public Optional<Trip> findById(UUID id) {
+        return repository.findById(id);
     }
 }
