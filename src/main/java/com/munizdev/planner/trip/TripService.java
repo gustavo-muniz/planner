@@ -39,4 +39,17 @@ public class TripService {
 
         return trip;
     }
+
+    public Optional<Trip> confirmTrip(UUID id) {
+        Optional<Trip> trip = repository.findById(id);
+
+        if (trip.isPresent()) {
+            Trip rawTrip = trip.get();
+            rawTrip.setIsConfirmed(true);
+
+            this.repository.save(rawTrip);
+        }
+
+        return trip;
+    }
 }
