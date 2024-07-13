@@ -1,4 +1,4 @@
-CREATE TABLE trip (
+CREATE TABLE trips (
     id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
     destination VARCHAR(255) NOT NULL,
     starts_at TIMESTAMP NOT NULL,
