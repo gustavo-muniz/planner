@@ -1,5 +1,9 @@
 package com.munizdev.planner.trip;
 
+import com.munizdev.planner.activity.Activity;
+import com.munizdev.planner.activity.ActivityRequestPayload;
+import com.munizdev.planner.activity.ActivityResponse;
+import com.munizdev.planner.activity.ActivityService;
 import com.munizdev.planner.participant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,8 @@ public class TripService {
     private TripRepository repository;
     @Autowired
     private ParticipantService participantService;
+    @Autowired
+    private ActivityService activityService;
 
     public Trip createTrip(TripRequestPayload data) {
         Trip trip = new Trip(data);
@@ -74,5 +80,16 @@ public class TripService {
         List<ParticipantData> participants = participantService.getAllParticipantsFromTrip(id);
 
         return participants;
+    }
+
+    public Optional<ActivityResponse> registerActivity(UUID id, ActivityRequestPayload payload) {
+        Optional<Trip> trip = repository.findById(id);
+
+        ActivityResponse activity = null;
+        if (trip.isPresent()) {
+            activity = activityService.registerActivity(payload, trip.get());
+        }
+
+        return Optional.ofNullable(activity);
     }
 }

@@ -1,5 +1,8 @@
 package com.munizdev.planner.trip;
 
+import com.munizdev.planner.activity.Activity;
+import com.munizdev.planner.activity.ActivityRequestPayload;
+import com.munizdev.planner.activity.ActivityResponse;
 import com.munizdev.planner.participant.Participant;
 import com.munizdev.planner.participant.ParticipantCreateResponse;
 import com.munizdev.planner.participant.ParticipantData;
@@ -61,5 +64,12 @@ public class TripController {
         List<ParticipantData> participants = service.getAllParticipants(id);
 
         return ResponseEntity.ok(participants);
+    }
+
+    @PostMapping("/{id}/activities")
+    public ResponseEntity<ActivityResponse> registerActivity(@PathVariable UUID id, @RequestBody ActivityRequestPayload payload) {
+        Optional<ActivityResponse> activity = service.registerActivity(id, payload);
+
+        return activity.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
