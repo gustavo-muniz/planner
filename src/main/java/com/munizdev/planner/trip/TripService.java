@@ -1,5 +1,6 @@
 package com.munizdev.planner.trip;
 
+import com.munizdev.planner.participant.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,14 @@ public class TripService {
 
     @Autowired
     private TripRepository repository;
+    @Autowired
+    private ParticipantService participantService;
 
     public Trip createTrip(TripRequestPayload data) {
         Trip trip = new Trip(data);
         this.repository.save(trip);
+
+        this.participantService.registerParticipantsToTrip(data.emails_to_invite(), trip);
 
         return trip;
     }
