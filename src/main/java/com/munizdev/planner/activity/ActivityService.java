@@ -1,6 +1,5 @@
 package com.munizdev.planner.activity;
 
-import com.munizdev.planner.participant.ParticipantData;
 import com.munizdev.planner.trip.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

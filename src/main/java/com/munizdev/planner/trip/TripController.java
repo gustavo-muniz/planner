@@ -3,6 +3,8 @@ package com.munizdev.planner.trip;
 import com.munizdev.planner.activity.Activity;
 import com.munizdev.planner.activity.ActivityRequestPayload;
 import com.munizdev.planner.activity.ActivityResponse;
+import com.munizdev.planner.link.LinkRequestPayload;
+import com.munizdev.planner.link.LinkResponse;
 import com.munizdev.planner.participant.Participant;
 import com.munizdev.planner.participant.ParticipantCreateResponse;
 import com.munizdev.planner.participant.ParticipantData;
@@ -78,5 +80,19 @@ public class TripController {
         List<ActivityResponse> activities = service.getAllActivities(id);
 
         return ResponseEntity.ok(activities);
+    }
+
+    @PostMapping("/{id}/links")
+    public ResponseEntity<LinkResponse> registerLink(@PathVariable UUID id, @RequestBody LinkRequestPayload payload) {
+        Optional<LinkResponse> link = service.registerLink(id, payload);
+
+        return link.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/links")
+    public ResponseEntity<List<LinkResponse>> getAllLinks(@PathVariable UUID id) {
+        List<LinkResponse> links = service.getAllLinks(id);
+
+        return ResponseEntity.ok(links);
     }
 }
