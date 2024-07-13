@@ -1,5 +1,7 @@
 package com.munizdev.planner.trip;
 
+import com.munizdev.planner.participant.ParticipantCreateResponse;
+import com.munizdev.planner.participant.ParticipanteRequestPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +44,12 @@ public class TripController {
         Optional<Trip> trip = service.confirmTrip(id);
 
         return trip.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{id}/invite")
+    public ResponseEntity<ParticipantCreateResponse> inviteParticipant(@PathVariable UUID id, @RequestBody ParticipanteRequestPayload payload) {
+        Optional<ParticipantCreateResponse> participant = service.inviteParticipant(id, payload);
+
+        return participant.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

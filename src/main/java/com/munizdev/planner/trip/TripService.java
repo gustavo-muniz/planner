@@ -1,6 +1,8 @@
 package com.munizdev.planner.trip;
 
+import com.munizdev.planner.participant.ParticipantCreateResponse;
 import com.munizdev.planner.participant.ParticipantService;
+import com.munizdev.planner.participant.ParticipanteRequestPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +58,16 @@ public class TripService {
         }
 
         return trip;
+    }
+
+    public Optional<ParticipantCreateResponse> inviteParticipant(UUID id, ParticipanteRequestPayload payload) {
+        Optional<Trip> trip = repository.findById(id);
+
+        ParticipantCreateResponse participantCreateResponse = null;
+        if (trip.isPresent()) {
+            participantCreateResponse = participantService.registerParticipantToTrip(payload.email(), trip.get());
+        }
+
+        return Optional.ofNullable(participantCreateResponse);
     }
 }

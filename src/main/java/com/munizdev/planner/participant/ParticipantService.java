@@ -19,7 +19,15 @@ public class ParticipantService {
 
         this.repository.saveAll(participants);
     }
-    
+
+    public ParticipantCreateResponse registerParticipantToTrip(String email, Trip trip) {
+        Participant participant = new Participant(email, trip);
+
+        this.repository.save(participant);
+
+        return new ParticipantCreateResponse(participant.getId());
+    }
+
     public Optional<Participant> confirmParticipant(UUID id, ParticipanteRequestPayload payload) {
         Optional<Participant> participant = repository.findById(id);
 
