@@ -92,4 +92,10 @@ public class TripService {
 
         return Optional.ofNullable(activity);
     }
+
+    public List<ActivityResponse> getAllActivities(UUID id) {
+        List<ActivityResponse> activities = activityService.getAllActivitiesFromTrip(id);
+
+        return activities;
+    }
 }
