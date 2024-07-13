@@ -41,4 +41,8 @@ public class ParticipantService {
 
         return participant;
     }
+
+    public List<ParticipantData> getAllParticipantsFromTrip(UUID tripId) {
+        return this.repository.findByTripId(tripId).stream().map(p -> new ParticipantData(p.getId(), p.getName(), p.getEmail(), p.getIsConfirmed())).toList();
+    }
 }

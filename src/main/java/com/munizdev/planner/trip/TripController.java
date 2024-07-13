@@ -1,6 +1,8 @@
 package com.munizdev.planner.trip;
 
+import com.munizdev.planner.participant.Participant;
 import com.munizdev.planner.participant.ParticipantCreateResponse;
+import com.munizdev.planner.participant.ParticipantData;
 import com.munizdev.planner.participant.ParticipanteRequestPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,5 +54,12 @@ public class TripController {
         Optional<ParticipantCreateResponse> participant = service.inviteParticipant(id, payload);
 
         return participant.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/participants")
+    public ResponseEntity<List<ParticipantData>> getAllParticipants(@PathVariable UUID id) {
+        List<ParticipantData> participants = service.getAllParticipants(id);
+
+        return ResponseEntity.ok(participants);
     }
 }

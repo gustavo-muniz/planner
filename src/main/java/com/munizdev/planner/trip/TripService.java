@@ -1,13 +1,12 @@
 package com.munizdev.planner.trip;
 
-import com.munizdev.planner.participant.ParticipantCreateResponse;
-import com.munizdev.planner.participant.ParticipantService;
-import com.munizdev.planner.participant.ParticipanteRequestPayload;
+import com.munizdev.planner.participant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -69,5 +68,11 @@ public class TripService {
         }
 
         return Optional.ofNullable(participantCreateResponse);
+    }
+
+    public List<ParticipantData> getAllParticipants(UUID id) {
+        List<ParticipantData> participants = participantService.getAllParticipantsFromTrip(id);
+
+        return participants;
     }
 }
